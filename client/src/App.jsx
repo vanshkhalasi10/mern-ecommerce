@@ -1,10 +1,23 @@
 import './App.css'
+import Login from './pages/auth/login'
+import Register from './pages/auth/register'
+
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
- 
+
   return (
     <>
-      <h1>MERN E-commerce</h1>
+
+      <BrowserRouter>
+
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+
+      </BrowserRouter>
     </>
   )
 }
