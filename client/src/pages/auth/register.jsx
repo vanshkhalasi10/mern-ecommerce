@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import axios from "axios";
+import './Register.css';
+import { useNavigate } from "react-router-dom";
+import axiosInstance from '../../utils/axiosInstance';
 
 const Register = () => {
 
@@ -9,40 +11,69 @@ const Register = () => {
     password: ""
   });
 
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
-    setFormData({...formData,[e.target.name]:e.target.value});
-    console.log(formData)
-    
+    const { name, value } = e.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   }
 
-  const handleSubmit= async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register",formData);
-      alert(res.data.message);
-      
+      setLoading(true);
+      const res = await axiosInstance.post("/auth/register", formData);
+
+      setSuccess(res.data.message || "Registered successfully");
+      localStorage.setItem("verifyEmail", formData.email);
+
+      setTimeout(() => {
+
+        navigate('/verify-email', {
+          state: { email: formData.email }
+        });
+      }, 800)
+
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      setError(err.response?.data?.message || "Error");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h2>Register Page</h2>
+    <div className='register-container'>
+      <form className='register-form' onSubmit={handleSubmit}>
+        <h2>Create Account</h2>
 
+        {success && <p className="success-text">{success}</p>}
+        {error && <p className="error-text">{error}</p>}
 
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Full Name"
+          value={formData.name}
           onChange={handleChange}
         />
 
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Email Address"
+          value={formData.email}
           onChange={handleChange}
         />
 
@@ -50,10 +81,13 @@ const Register = () => {
           type="password"
           name="password"
           placeholder="Password"
+          value={formData.password}
           onChange={handleChange}
         />
 
-        <button type='submit'>Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Creating account..." : "Register"}
+        </button>
       </form>
     </div>
   )
