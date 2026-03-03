@@ -180,7 +180,7 @@ const login = async (req, res) => {
             sameSite: isProduction ? "None" : "Lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
-        
+
         res.cookie("token", token, cookieOptions);
 
         res.json({
@@ -194,6 +194,7 @@ const login = async (req, res) => {
             }
         });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Server error' });
     }
 };
