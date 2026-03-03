@@ -172,14 +172,18 @@ const login = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES }
         );
+
+
         const isProduction = process.env.NODE_ENV === "production";
 
-        res.cookie("token", token, {
+        const cookieOptions = {
             httpOnly: true,
             secure: isProduction,              // true in production
             sameSite: isProduction ? "None" : "Lax",
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        });
+            maxAge: 7 * 24 * 60 * 60 * 1000 //7days
+        };
+
+      
 
         res.cookie("token", token, cookieOptions);
 
@@ -194,7 +198,6 @@ const login = async (req, res) => {
             }
         });
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: 'Server error' });
     }
 };
