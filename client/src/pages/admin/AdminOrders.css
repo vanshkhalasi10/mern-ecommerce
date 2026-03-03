@@ -1,0 +1,114 @@
+.admin-orders-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.admin-orders-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Reuse admin table style */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.admin-table thead {
+  background: #f8fafc;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.admin-table th {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.admin-table tbody tr {
+  border-top: 1px solid var(--border);
+}
+
+.admin-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Status badge */
+.status {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  color: #f59e0b;
+}
+
+.status.processing {
+  color: #3b82f6;
+}
+
+.status.shipped {
+  color: #8b5cf6;
+}
+
+.status.delivered {
+  color: #22c55e;
+}
+
+.status.cancelled {
+  color: #ef4444;
+}
+
+/* Select */
+.status-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  background: var(--white);
+  cursor: pointer;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .admin-orders-title {
+    font-size: 22px;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

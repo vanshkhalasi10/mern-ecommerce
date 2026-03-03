@@ -1,0 +1,19 @@
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: block;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axiosInstance';
+import './MyOrders.css'
 
 const MyOrders = () => {
 
@@ -15,17 +16,38 @@ const MyOrders = () => {
 
     }, []);
     return (
-        <div>
-            <h2>My Orders</h2>
+        <div className="orders-page">
 
-            {orders.map(order => (
-                <div key={order._id} style={{ border: "1px solid #ccc", margin: 10 }}>
-                    <p>Status:{order.orderStatus}</p>
-                    <p>Total:₹{order.totalAmount}</p>
-                    <p>Date:{new Date(order.createdAt).toLocaleDateString()}</p>
-                </div>
-            ))}
-        </div>
+      <h2 className="orders-title">My Orders</h2>
+
+      <div className="orders-list">
+        {orders.map(order => (
+          <div key={order._id} className="order-card">
+
+            <div className="order-row">
+              <span>Status</span>
+              <span className={`status ${order.orderStatus.toLowerCase()}`}>
+                {order.orderStatus}
+              </span>
+            </div>
+
+            <div className="order-row">
+              <span>Total</span>
+              <span>₹{order.totalAmount}</span>
+            </div>
+
+            <div className="order-row">
+              <span>Date</span>
+              <span>
+                {new Date(order.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
     )
 }
 

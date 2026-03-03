@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import './Login.css';
+import "./Auth.css";
 import axiosInstance from '../../utils/axiosInstance';
+import { useAuth } from '../../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -14,6 +16,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,11 +31,22 @@ const Login = () => {
 
     try {
       setLoading(true);
-      await axiosInstance.post("/auth/login", formData, {
+      const res = await axiosInstance.post("/auth/login", formData, {
         withCredentials: true
       });
 
+      const loggedUser = res.data.user
+
+      setUser(loggedUser);
       setSuccess("Login Successful");
+
+      setTimeout(() => {
+        if (loggedUser.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
+      }, 500);
 
 
     } catch (error) {
@@ -43,32 +59,50 @@ const Login = () => {
 
 
   return (
-    <div className="login-container">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+    <div className="auth-wrapper">
+      <form className="auth-card fade-in" onSubmit={handleSubmit}>
+        <div className="auth-back">
+          <Link to="/">← Back to Home</Link>
+        </div>
+
+        <h2 className="auth-title">Welcome Back</h2>
+        <p className="auth-subtitle">Login to continue shopping</p>
+
         {success && <p className="success-text">{success}</p>}
         {error && <p className="error-text">{error}</p>}
 
+        <div>
+          <label className="label">Email</label>
+          <input
+            type="email"
+            name="email"
+            className="input"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <div>
+          <label className="label">Password</label>
+          <input
+            type="password"
+            name="password"
+            className="input"
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
+
+        <div className="auth-footer">
+          Don’t have an account? <a href="/register">Register</a>
+        </div>
+
       </form>
     </div>
   )

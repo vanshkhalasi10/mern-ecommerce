@@ -1,0 +1,55 @@
+.home {
+  padding: 3rem 1.5rem;
+}
+
+/* HERO */
+.home-hero {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.home-hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.home-hero h1 span {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-hero p {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 16px 0 28px;
+}
+
+.home-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* INFO */
+.home-info {
+  max-width: 1000px;
+  margin: 4rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.info-card h3 {
+  margin-bottom: 8px;
+  color: var(--dark);
+}
+
+.info-card p {
+  color: var(--muted);
+  font-size: 14px;
+}

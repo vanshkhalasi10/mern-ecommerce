@@ -1,47 +1,75 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import axiosInstance from '../utils/axiosInstance';
+import './ProductDetail.css'
 
 const ProductDetail = () => {
 
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const {addToCart} = useCart();
+    const { addToCart } = useCart();
+    const [activeImage, setActiveImage] = useState("");
 
     useEffect(() => {
         axiosInstance.get(`/products/${id}`)
-            .then(res => setProduct(res.data))
+            .then(res => {
+                setProduct(res.data);
+                setActiveImage(res.data.images?.[0]?.url)
+
+            })
             .catch(() => alert("Product not found"));
     }, [id]);
 
- 
+
     if (!product) return <p>Loading...</p>;
     return (
-        <div style={{ display: "flex", gap: 30 }}>
-            <div>
-                {product.images.map((img, i) => (
+        <div className="product-detail-page">
+
+            {/* Images */}
+            <div className="product-gallery">
+
+                {/* MAIN IMAGE */}
+                <div className="main-image">
                     <img
-                        key={i}
-                        src={img.url}
+                        src={activeImage}
                         alt={product.title}
-                        width="200"
-                        style={{ marginRight: 10 }}
                     />
-                ))}
+                </div>
+
+                {/* THUMBNAILS */}
+                <div className="thumbnail-list">
+                    {product.images.map((img, i) => (
+                        <img
+                            key={i}
+                            src={img.url}
+                            alt={product.title}
+                            className={activeImage === img.url ? "thumbnail active" : "thumbnail"}
+                            onClick={() => setActiveImage(img.url)}
+                        />
+                    ))}
+                </div>
+
             </div>
 
-            <div>
+            {/* Info */}
+            <div className="product-detail-info">
                 <h2>{product.title}</h2>
-                <p>{product.description}</p>
-                <h3>₹{product.price}</h3>
-                <p>Category: {product.category}</p>
-                <p>Stock: {product.stock}</p>
+                <p className="description">{product.description}</p>
 
-                <button onClick={()=>addToCart(product)}>
+                <h3 className="price">₹{product.price}</h3>
+
+                <p><b>Category:</b> {product.category}</p>
+                <p><b>Stock:</b> {product.stock}</p>
+
+                <button
+                    className="btn btn-primary"
+                    onClick={() => addToCart(product)}
+                >
                     Add to Cart
                 </button>
             </div>
+
         </div>
     )
 }

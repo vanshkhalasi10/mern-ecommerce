@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-
-import "./VerifyEmail.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from '../../utils/axiosInstance';
+import './Auth.css'
 
 
 const VerifyEmail = () => {

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
+import './EditProduct.css';
+
 const EditProduct = () => {
 
   const { id } = useParams();
@@ -44,26 +46,84 @@ const EditProduct = () => {
 
 
   return (
-    <div>
-      <h2>Edit Product</h2>
+    <div className="edit-product-page">
 
-      <form onSubmit={handleSubmit}>
-        <input type="text" name='title' value={formData.title} onChange={handleChange} />
-        <textarea
-          name=""
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input type="text" name='price' value={formData.price} onChange={handleChange} />
-        <input
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-        />
-        <input type="text" name='stock' value={formData.stock} onChange={handleChange} />
+      <h2 className="edit-title">Edit Product</h2>
 
-        <button type='submit'>Update Product</button>
+      <form className="edit-form" onSubmit={handleSubmit}>
+
+        <div className="form-group">
+          <label>Title</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-row">
+
+          <div className="form-group">
+            <label>Price</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Stock</label>
+            <input
+              type="number"
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
+            />
+          </div>
+
+        </div>
+
+        <div className="form-group">
+          <label>Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+          >
+            <option value="">Select Category</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="home">Home</option>
+            <option value="sports">Sports</option>
+          </select>
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" className="btn btn-primary">
+            Update Product
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={() => navigate("/admin/products")}
+          >
+            Cancel
+          </button>
+        </div>
+
       </form>
     </div>
   )

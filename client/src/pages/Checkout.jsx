@@ -1,6 +1,7 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
+import './Checkout.css'
 
 
 const Checkout = () => {
@@ -12,7 +13,7 @@ const Checkout = () => {
         (sum, item) => sum + item.price * item.qty,
         0
     );
-    
+
 
     const placeOrder = async () => {
         try {
@@ -40,23 +41,42 @@ const Checkout = () => {
         }
     }
 
-    if(cart.length===0) return <h3>No items in cart</h3>;
+    if (cart.length === 0) return <h3>No items in cart</h3>;
 
 
     return (
-        <div>
-            <h2>Checkout</h2>
-            {cart.map(item => (
-                <div key={item._id}>
-                    <p>
-                        {item.title} x {item.qty} =  ₹{item.price * item.qty}
-                    </p>
+        <div className="checkout-page">
+
+            <h2 className="checkout-title">Checkout</h2>
+
+            <div className="checkout-card">
+
+                <div className="checkout-items">
+                    {cart.map(item => (
+                        <div key={item._id} className="checkout-item">
+                            <span className="item-title">
+                                {item.title} × {item.qty}
+                            </span>
+                            <span className="item-price">
+                                ₹{item.price * item.qty}
+                            </span>
+                        </div>
+                    ))}
                 </div>
-            ))}
 
-            <h3>Total: ₹{totalAmount}</h3>
+                <div className="checkout-total">
+                    <span>Total</span>
+                    <span>₹{totalAmount}</span>
+                </div>
 
-            <button onClick={placeOrder}>Place Order</button>
+                <button
+                    className="btn btn-primary checkout-btn"
+                    onClick={placeOrder}
+                >
+                    Place Order
+                </button>
+
+            </div>
         </div>
     )
 }

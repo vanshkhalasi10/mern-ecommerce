@@ -1,0 +1,135 @@
+.navbar {
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 14px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.navbar-logo span {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a,
+.navbar-actions a {
+  font-size: 14px;
+  color: var(--muted);
+  transition: var(--transition);
+}
+
+.navbar-links a.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+.navbar-links a:hover {
+  color: var(--primary);
+}
+
+.navbar-actions a:not(.btn):hover {
+  color: var(--primary);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Navbar specific buttons */
+.navbar-actions .btn {
+  padding: 8px 16px;          /* ⬅ compact */
+  font-size: 14px;
+  border-radius: 999px;       /* ⬅ pill style */
+}
+
+/* Login (outline) */
+.navbar-actions .btn-outline {
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+}
+
+.navbar-actions .btn-outline:hover {
+  background: rgba(106, 17, 203, 0.08);
+}
+
+/* Register (primary) */
+.navbar-actions .btn-primary {
+  background: var(--gradient);
+  color: #fff;
+}
+
+.navbar-actions .btn-primary:hover {
+  opacity: 0.95;
+}
+
+/* 🔥 Fix: Primary button text color on hover */
+.navbar-actions .btn-primary:hover {
+  color: #ffffff !important;
+}
+
+.cart-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-right: 18px;   /* 🔥 badge ke liye space */
+}
+
+/* Cart text */
+.cart-text {
+  font-size: 14px;
+}
+
+/* Badge */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: 0;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-badge {
+  background: #111827;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-left: 10px;
+}

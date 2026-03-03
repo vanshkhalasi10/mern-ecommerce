@@ -2,57 +2,116 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
+import "./Product.css";
 
 const Products = () => {
 
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
+    const [search, setSearch] = useState("");
+    const [category, setCategory] = useState("");
+    const [sort, setSort] = useState("");
 
     useEffect(() => {
-        axiosInstance.get(`/products?page=${page}`)
+        axiosInstance.get(
+            `/products?page=${page}&search=${search}&category=${category}&sort=${sort}`
+        )
             .then(res => {
                 setProducts(res.data.products);
                 setPages(res.data.pages);
             });
-    }, [page]);
+    }, [page, search, category, sort]);
 
     return (
-        <div>
-            <h2>Products</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }}>
+        <div className="products-page">
+            <div className="products-filters">
+
+                {/* Search */}
+                <input
+                    type="text"
+                    placeholder="Search products... 🔍  "
+                    value={search}
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                        setPage(1);
+                    }}
+                />
+
+                {/* Category */}
+                <select
+                    value={category}
+                    onChange={(e) => {
+                        setCategory(e.target.value);
+                        setPage(1);
+                    }}
+                >
+                    <option value="">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="home">Home</option>
+                    <option value="sports">Sports</option>
+                </select>
+
+                {/* Sort */}
+                <select
+                    value={sort}
+                    onChange={(e) => {
+                        setSort(e.target.value);
+                        setPage(1);
+                    }}
+                >
+                    <option value="">Sort By</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="latest">Latest</option>
+                </select>
+
+            </div>
+
+            <h2 className="products-title">Products</h2>
+
+            <div className="products-grid">
                 {products.map(p => (
-                    <div key={p._id} style={{ border: "1px solid #ccc", padding: 10 }}>
+                    <div key={p._id} className="product-card">
 
-                        <Link to={`/products/${p._id}`}>
-                            {p.images?.[0] && (
-
+                        <Link to={`/products/${p._id}`} className="product-link">
+                            <div className="product-image-wrapper">
                                 <img
                                     src={p.images[0].url}
                                     alt={p.title}
-                                    width="100%"
+                                    className="product-image"
                                 />
-                            )}
-                            <h4>{p.title}</h4>
+                            </div>
+                            <h4 className="product-title">{p.title}</h4>
                         </Link>
-                        <p>₹{p.price}</p>
+
+                        <p className="product-price">₹{p.price}</p>
                     </div>
                 ))}
             </div>
 
-            <div style={{ marginTop: 20 }}>
-                <button disabled={page === 1} onClick={() => { setPage(page - 1) }}>
+            {/* Pagination */}
+            <div className="pagination">
+                <button
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                >
                     Prev
                 </button>
 
-                <span style={{ margin: "0 10px" }}>
+                <span>
                     Page {page} of {pages}
                 </span>
 
-                <button disabled={page === pages} onClick={() => { setPage(page + 1) }}>
+                <button
+                    disabled={page === pages}
+                    onClick={() => setPage(page + 1)}
+                >
                     Next
                 </button>
             </div>
+
         </div>
     )
 }

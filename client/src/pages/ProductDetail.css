@@ -1,0 +1,118 @@
+.product-detail-page {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 32px;                 /* thoda andar space */
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+
+  background: var(--white);      /* 🔥 card background */
+  border-radius: var(--radius);  /* 🔥 rounded */
+  box-shadow: var(--shadow-md);  /* 🔥 MAIN SHADOW */
+}
+
+/* Image gallery */
+/* Gallery layout */
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Main image */
+.main-image {
+    width: 100%;
+    max-width: 420px;
+    height: 420px;
+    background: #f8f8f8;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Thumbnails */
+.thumbnail-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    background: #f8f8f8;
+    border-radius: var(--radius);
+    padding: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s ease;
+}
+
+.thumbnail:hover {
+    border-color: var(--primary);
+}
+
+.thumbnail.active {
+    border-color: var(--primary);
+}
+
+/* Info section */
+.product-detail-info h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.product-detail-info .description {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 14px;
+}
+
+.product-detail-info .price {
+    font-size: 24px;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.product-detail-info p {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.product-detail-info button {
+    margin-top: 20px;
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .thumbnail-list {
+    justify-content: center;
+  }
+
+  .main-image {
+    height: 300px;
+  }
+}
+
+.product-detail-info {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.product-detail-info:hover {
+  box-shadow: var(--shadow-lg);
+}

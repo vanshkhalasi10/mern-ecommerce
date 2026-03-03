@@ -1,0 +1,80 @@
+
+.orders-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.orders-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* Empty */
+.orders-empty {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 18px;
+}
+
+/* List */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card */
+.order-card {
+  background: var(--white);
+  padding: 22px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Rows */
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.order-row span:first-child {
+  color: var(--muted);
+}
+
+/* Status */
+.status {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Status colors */
+.status.pending {
+  color: #f59e0b;
+}
+
+.status.processing {
+  color: #3b82f6;
+}
+
+.status.shipped {
+  color: #8b5cf6;
+}
+
+.status.delivered {
+  color: #22c55e;
+}
+
+.status.cancelled {
+  color: #ef4444;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .order-row {
+    font-size: 14px;
+  }
+}

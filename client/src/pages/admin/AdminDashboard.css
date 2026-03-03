@@ -1,0 +1,94 @@
+.admin-dashboard {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.admin-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Card */
+.stat-card {
+  background: var(--white);
+  padding: 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+/* Label */
+.stat-label {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* Value */
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Pending highlight */
+.stat-card.pending .stat-value {
+  color: #f59e0b;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Icon wrapper */
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+}
+
+/* Icon colors */
+.stat-icon.users {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.stat-icon.products {
+  background: #ecfeff;
+  color: #0891b2;
+}
+
+.stat-icon.orders {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.stat-icon.pending {
+  background: #fff7ed;
+  color: #f59e0b;
+}

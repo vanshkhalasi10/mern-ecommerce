@@ -6,13 +6,19 @@ const createProduct = async (req, res) => {
     try {
 
         const { title, description, price, category, stock } = req.body;
-        console.log(req.body)
+
+
+        const allowedCategories = ["electronics", "fashion", "home", "sports"];
+
 
 
         if (!title || !description || !price || !category) {
             return res.status(400).json({ message: "All fields required" });
         }
 
+        if (!allowedCategories.includes(category)) {
+            return res.status(400).json({ message: "Invalid category" });
+        }
         let imageUrls = [];
 
         if (req.files && req.files.length > 0) {
@@ -51,18 +57,35 @@ const getAllProduct = async (req, res) => {
     try {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 8;
+
         const search = req.query.search || "";
+        const category = req.query.category || "";
+        const sort = req.query.sort || "";
 
         const query = {
             title: { $regex: search, $options: "i" }
         };
+
+        if (category) {
+            query.category = category;
+        }
+
+        let sortOption = { createdAt: -1 }
+
+        if (sort === "price-asc") {
+            sortOption = { price: 1 };
+        } else if (sort === "price-desc") {
+            sortOption = { price: -1 }
+        } else if (sort === "latest") {
+            sortOption = { createdAt: -1 }
+        }
 
         const total = await Product.countDocuments(query);
 
         const products = await Product.find(query)
             .skip((page - 1) * limit)
             .limit(limit)
-            .sort({ createdAt: -1 });
+            .sort(sortOption);
 
         res.json({
             products,
@@ -98,8 +121,22 @@ const getSingleProduct = async (req, res) => {
 
 const getAdminProducts = async (req, res) => {
     try {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        const total = await Product.countDocuments();
+
         const products = await Product.find()
-        res.json(products)
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .sort({ createdAt: -1 });
+
+        res.json({
+            products,
+            page,
+            pages: Math.ceil(total / limit),
+            total
+        });
     } catch (error) {
 
         return res.status(500).json({ message: "Server Error" });

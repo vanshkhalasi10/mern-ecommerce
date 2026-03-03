@@ -16,12 +16,10 @@ const CreateProduct = () => {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        console.log(formData)
     };
 
     const handleImageChange = (e) => {
         setImages(e.target.files)
-        console.log(images)
     };
 
     const handleSubmit = async (e) => {
@@ -30,7 +28,6 @@ const CreateProduct = () => {
 
         try {
             const data = new FormData();
-            console.log(data)
 
             Object.keys(formData).forEach(key => {
                 data.append(key, formData[key]);
@@ -92,12 +89,13 @@ const CreateProduct = () => {
                     onChange={handleChange}
                 /><br /><br />
 
-                <input
-                    type="text"
-                    name="category"
-                    placeholder='Category'
-                    onChange={handleChange}
-                /><br /><br />
+                <select name="category" value={formData.category} onChange={handleChange}>
+                    <option value="">Select Category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="home">Home</option>
+                    <option value="sports">Sports</option>
+                </select>
 
                 <input
                     type="text"

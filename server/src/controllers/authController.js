@@ -112,11 +112,11 @@ const resendOtp = async (req, res) => {
             return res.status(400).json({ message: "User already verified" });
         }
 
-        const  ONE_MINUTE = 60*1000;
+        const ONE_MINUTE = 60 * 1000;
 
-        if(user.lastOtpSentAt && Date.now() - user.lastOtpSentAt < ONE_MINUTE){
+        if (user.lastOtpSentAt && Date.now() - user.lastOtpSentAt < ONE_MINUTE) {
             return res.status(400).json({
-                message:"Please wait 1 minute before requesting another otp"
+                message: "Please wait 1 minute before requesting another otp"
             });
         }
 
@@ -144,7 +144,6 @@ const resendOtp = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(password,email)
 
         if (!email || !password) {
             return res.status(400).json({ message: "All Fileds Required" });
@@ -176,7 +175,8 @@ const login = async (req, res) => {
         const cookieOptions = {
             httpOnly: true,
             secure: false,
-            sameSite: "Strict"
+            sameSite: "Lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000 //7days
         };
 
         res.cookie("token", token, cookieOptions);
@@ -206,4 +206,20 @@ const getProfile = async (req, res) => {
         res.status(500).json({ message: "Server Error" })
     }
 };
-module.exports = { register, login, getProfile, verifyOtp, sendOtp, resendOtp }
+
+const getMe = async (req, res) => {
+    res.status(200).json({
+        user: req.user,
+    });
+};
+
+const logoutUser = async (req, res) => {
+    res.cookie("token", "", {
+        httpOnly: true,
+        expiresIn: new Date(0),
+    });
+
+    res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports = { register, login, getProfile, verifyOtp, sendOtp, resendOtp, getMe, logoutUser }

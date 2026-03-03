@@ -1,0 +1,120 @@
+.admin-products-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.admin-products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-products-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* Message */
+.success-message {
+  color: #16a34a;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.admin-table thead {
+  background: #f8fafc;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.admin-table th {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.admin-table tbody tr {
+  border-top: 1px solid var(--border);
+}
+
+.admin-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Image */
+.table-image {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  background: #f8f8f8;
+  border-radius: 6px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Buttons */
+.btn-danger {
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  background: transparent;
+}
+
+.btn-danger:hover {
+  background: #fee2e2;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .admin-products-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

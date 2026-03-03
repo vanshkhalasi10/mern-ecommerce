@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import './Register.css';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from '../../utils/axiosInstance';
+import { useAuth } from '../../context/AuthContext';
+import "./Auth.css";
 
 const Register = () => {
+
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +20,6 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +37,12 @@ const Register = () => {
 
     try {
       setLoading(true);
-      const res = await axiosInstance.post("/auth/register", formData);
+      const res = await axiosInstance.post("/auth/register",
+        formData,
+        { withCredentials: true }
+      );
+
+      setUser(res.data.user);
 
       setSuccess(res.data.message || "Registered successfully");
       localStorage.setItem("verifyEmail", formData.email);
@@ -56,6 +64,11 @@ const Register = () => {
   return (
     <div className='register-container'>
       <form className='register-form' onSubmit={handleSubmit}>
+
+        <div className="auth-back">
+          <Link to="/">← Back to Home</Link>
+        </div>
+
         <h2>Create Account</h2>
 
         {success && <p className="success-text">{success}</p>}
@@ -88,6 +101,10 @@ const Register = () => {
         <button type="submit" disabled={loading}>
           {loading ? "Creating account..." : "Register"}
         </button>
+
+        <div className="auth-footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </div>
       </form>
     </div>
   )

@@ -40,11 +40,25 @@ const getMyOrders = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
     try {
+
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        const total = await Order.countDocuments();
+
         const orders = await Order.find()
             .populate("user", "name email")
+            .skip((page-1)*limit)
+            .limit(limit)
             .sort({ createdAt: -1 });
 
-        res.json(orders)
+        res.json({
+            orders,
+            page,
+            pages:Math.ceil(total/limit),
+            total
+        });
+
 
     } catch (error) {
         res.status(500).json({ message: "Server error" });
@@ -55,15 +69,15 @@ const updateOrderStatus = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
 
-        if(!order){
-            return res.status(404).json({message:"Order not found"});
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
         }
 
         order.orderStatus = req.body.status || order.orderStatus;
         await order.save();
 
         res.json({
-            message:"Order status updated",
+            message: "Order status updated",
             order
         });
     } catch (error) {
@@ -71,4 +85,4 @@ const updateOrderStatus = async (req, res) => {
     }
 };
 
-module.exports = { placeOrder, getMyOrders, getAllOrders,updateOrderStatus }
+module.exports = { placeOrder, getMyOrders, getAllOrders, updateOrderStatus }
