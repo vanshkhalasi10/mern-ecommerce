@@ -173,17 +173,12 @@ const login = async (req, res) => {
             { expiresIn: process.env.JWT_EXPIRES }
         );
 
-
-        const isProduction = process.env.NODE_ENV === "production";
-
         const cookieOptions = {
             httpOnly: true,
-            secure: isProduction,              // true in production
-            sameSite: isProduction ? "None" : "Lax",
+            secure: false,              
+            sameSite: "Lax",
             maxAge: 7 * 24 * 60 * 60 * 1000 //7days
         };
-
-      
 
         res.cookie("token", token, cookieOptions);
 
