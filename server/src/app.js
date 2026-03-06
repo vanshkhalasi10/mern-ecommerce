@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({
   origin: [
    "http://localhost:5173" ,
-    
+    "https://mern-ecommerce-puce-five.vercel.app/"
   ],
   credentials: true
 }));
