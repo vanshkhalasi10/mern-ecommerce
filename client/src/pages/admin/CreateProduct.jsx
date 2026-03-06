@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axiosInstance from '../../utils/axiosInstance';
+import "./CreateProduct.css";
 
 const CreateProduct = () => {
 
@@ -65,53 +66,93 @@ const CreateProduct = () => {
     };
 
     return (
-        <div>
-            <h2>Create Product</h2>
+        <div className="create-product-page">
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name='title'
-                    placeholder='Title'
-                    onChange={handleChange}
-                /><br /><br />
+            <h2 className="create-title">Create Product</h2>
 
-                <textarea
-                    name="description"
-                    placeholder='Description'
-                    onChange={handleChange}
-                /><br /><br />
+            <form className="create-form" onSubmit={handleSubmit}>
 
-                <input
-                    type="text"
-                    name="price"
-                    placeholder='Price'
-                    onChange={handleChange}
-                /><br /><br />
+                <div className="form-group">
+                    <label>Title</label>
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Product title"
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                <select name="category" value={formData.category} onChange={handleChange}>
-                    <option value="">Select Category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home</option>
-                    <option value="sports">Sports</option>
-                </select>
+                <div className="form-group">
+                    <label>Description</label>
+                    <textarea
+                        name="description"
+                        placeholder="Product description"
+                        value={formData.description}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                <input
-                    type="text"
-                    name="stock"
-                    placeholder='Stock'
-                    onChange={handleChange}
-                /><br /><br />
+                <div className="form-row">
 
-                <input type="file" multiple onChange={handleImageChange} /><br /><br />
+                    <div className="form-group">
+                        <label>Price</label>
+                        <input
+                            type="number"
+                            name="price"
+                            placeholder="Price"
+                            value={formData.price}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {loading ? "Creating..." : "Create Product"}
-                </button>
+                    <div className="form-group">
+                        <label>Stock</label>
+                        <input
+                            type="number"
+                            name="stock"
+                            placeholder="Stock"
+                            value={formData.stock}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                </div>
+
+                <div className="form-group">
+                    <label>Category</label>
+                    <select
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="home">Home</option>
+                        <option value="sports">Sports</option>
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label>Images</label>
+                    <input
+                        type="file"
+                        multiple
+                        onChange={handleImageChange}
+                    />
+                </div>
+
+                <div className="form-actions">
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={loading}
+                    >
+                        {loading ? "Creating..." : "Create Product"}
+                    </button>
+                </div>
+
             </form>
         </div>
     )
